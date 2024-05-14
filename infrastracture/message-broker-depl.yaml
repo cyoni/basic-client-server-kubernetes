@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-broker-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-broker
+  template:
+    metadata:
+      labels:
+        app: message-broker
+    spec:
+      containers:
+      - name: message-broker
+        image: cyoni/message-broker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-broker-srv
+spec:
+  selector:
+    app: message-broker
+  ports:
+    - name: message-broker
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
